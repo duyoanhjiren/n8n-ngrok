@@ -3,14 +3,14 @@ echo "--------- 🟢 Start Docker compose down  -----------"
 sudo -E docker compose down
 echo "--------- 🔴 Finish Docker compose down -----------"
 echo "--------- 🟢 Start Ngrok setup -----------"
-wget -O ngrok.tgz https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+wget -O ngrok.tgz https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz
 sudo tar xvzf ./ngrok.tgz -C /usr/local/bin
 sudo apt install -y jq
 echo "🔴🔴🔴 Please login into ngrok.com and paste your token and static URL here:"
 read -p "Token : " token
 read -p "Domain : " domain
 ngrok config add-authtoken $token
-ngrok http --url=$domain 80 > /dev/null &
+ngrok http --domain=$domain 80 > /dev/null &
 echo "🔴🔴🔴 Please wait Ngrok to start...."
 sleep 8
 export EXTERNAL_IP="$(curl http://localhost:4040/api/tunnels | jq ".tunnels[0].public_url")"
